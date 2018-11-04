@@ -22,7 +22,13 @@ void dir(char * path){
     int o = ((info->st_mode))%8;
     char user[4];
     strcpy(user,permissions[3]);
-    printf("-%s",permissions[u]);
+    if(S_ISDIR(info->st_mode)){
+      printf("d");
+    }
+    else{
+      printf("-");
+    }
+    printf("%s",permissions[u]);
     printf("%s",permissions[g]);
     printf("%s          ",permissions[o]);
     printf("%ld          ",info->st_size);
