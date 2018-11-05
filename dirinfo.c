@@ -13,6 +13,7 @@ void dir(char * path){
   //stat("Gondal.Adil.txt",info);
   printf("PERMISSIONS---------FILESIZE-------FILENAME\n");
   char permissions[8][4] = {"---","--x","-w-","-wx","r--","r-x","rw-","rwx"};
+  long int totSize = 0;
   while(entry){
     struct stat * info = malloc(sizeof(struct stat));
     stat(entry -> d_name,info);
@@ -21,7 +22,6 @@ void dir(char * path){
     int g = ((info->st_mode)/8)%8;
     int o = ((info->st_mode))%8;
     char user[4];
-    strcpy(user,permissions[3]);
     if(S_ISDIR(info->st_mode)){
       printf("d");
     }
@@ -31,12 +31,15 @@ void dir(char * path){
     printf("%s",permissions[u]);
     printf("%s",permissions[g]);
     printf("%s          ",permissions[o]);
-    printf("%ld          ",info->st_size);
+    long int size = info ->st_size;
+    printf("%ld          ",size);
     printf("%s\n",entry -> d_name);
     entry = readdir(stream);
+    totSize+= size;
     //dir(readdir(stream));
   }
   closedir(stream);
+  printf("Total Diectory Size: %ld Bytes\n",totSize);
 
 }
 int main(){
