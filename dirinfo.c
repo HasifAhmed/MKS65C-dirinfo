@@ -15,36 +15,17 @@ void dir(char * path){
   long int totSize = 0;
   char permissions[8][4] = {"---","--x","-w-","-wx","r--","r-x","rw-","rwx"};
 
-
-
-  //struct stat * info = malloc(sizeof(struct stat));
-  //stat("Gondal.Adil.txt",info);
-
-  printf("PERMISSIONS---------FILESIZE-------FILENAME\n");
-
-
-
-  /*
-    struct stat * info = malloc(sizeof(struct stat));
-    stat(entry -> d_name,info);
-    printf("%o\n",info->st_mode);
-  */
-  //printf("heybdhabsk\n");
-
-  stream = opendir(path);
-  // printf("heybdhabsk\n");
-
-  if (errno != 0){
-    printf("Error: %s\n", strerror(errno));
-  }
   //THIS IS WHERE ERROR OCCURS
   if (opendir(path)== NULL & errno!=0){
     printf("\n**** Error With File Name : %s \n", strerror(errno));
     return;
   }
   else
-    entry = readdir(stream);
-  
+    {
+      stream = opendir(path);
+      entry = readdir(stream);
+    }
+  printf("PERMISSIONS---------FILESIZE-------FILENAME\n");
   while(entry){
     stat(entry -> d_name,info);
     //printf("%o        ",info->st_mode);
