@@ -2,8 +2,8 @@ all: dirinfo.o
 	gcc dirinfo.o
 
 run:
-	./a.out
-	
+	./a.out $(args)
+
 clean:
 	rm *.o
 
