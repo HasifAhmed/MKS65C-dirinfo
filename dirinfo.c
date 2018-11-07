@@ -8,6 +8,7 @@
 extern int errno;
 
 void dir(char * path){
+  errno=0;
   DIR * stream;
   struct dirent * entry;
   struct stat * info = calloc(sizeof(struct stat),1);
@@ -24,18 +25,27 @@ void dir(char * path){
 
 
   /*
-  struct stat * info = malloc(sizeof(struct stat));
-  stat(entry -> d_name,info);
-  printf("%o\n",info->st_mode);
+    struct stat * info = malloc(sizeof(struct stat));
+    stat(entry -> d_name,info);
+    printf("%o\n",info->st_mode);
   */
+  //printf("heybdhabsk\n");
 
   stream = opendir(path);
+  // printf("heybdhabsk\n");
+
   if (errno != 0){
     printf("Error: %s\n", strerror(errno));
   }
-  entry = readdir(stream);
+  //THIS IS WHERE ERROR OCCURS
+  if (opendir(path)== NULL & errno!=0){
+    printf("\n**** Error With File Name : %s \n", strerror(errno));
+    return;
+  }
+  else
+    entry = readdir(stream);
+  
   while(entry){
-
     stat(entry -> d_name,info);
     //printf("%o        ",info->st_mode);
     int u = ((info->st_mode)/64)%8;
